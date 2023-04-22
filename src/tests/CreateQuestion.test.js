@@ -44,8 +44,6 @@ describe("CreateQuestion", () => {
     fireEvent.click(submitBtn);
 
     await waitFor(() => {
-      // should redirect to home page
-      // and the new question should be in the list of unanswered questions
       const unansweredQuestions = screen.getByTestId("unanswered-questions");
       const questions = within(unansweredQuestions).queryAllByRole("article");
       expect(questions.length).toBe(3);

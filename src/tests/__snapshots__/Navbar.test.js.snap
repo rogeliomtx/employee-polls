@@ -96,113 +96,51 @@ exports[`Navbar with authed user should match the snapshot 1`] = `
         role="contentinfo"
       >
         <div
-          class="card mt-5"
+          class="card mt-5 p-3"
         >
-          <div
-            class="card-header"
+          <ul
+            class="nav nav-pills mt-3"
+            role="tablist"
           >
-            Unanswered
-          </div>
+            <li
+              class="nav-item"
+              role="presentation"
+            >
+              <button
+                class="nav-link active"
+                id="unanswered-questions"
+                role="tab"
+                type="button"
+              >
+                Unanswered Questions
+              </button>
+            </li>
+            <li
+              class="nav-item"
+              role="presentation"
+            >
+              <button
+                class="nav-link "
+                id="answered-questions"
+                role="tab"
+                type="button"
+              >
+                Answered Questions
+              </button>
+            </li>
+          </ul>
           <div
-            class="card-body"
+            class="tab-content"
           >
             <div
-              class="row row-cols-4"
-              data-testid="unanswered-questions"
-            />
-          </div>
-        </div>
-        <div
-          class="card mt-5 mb-5"
-        >
-          <div
-            class="card-header"
-          >
-            Answered
-          </div>
-          <div
-            class="card-body"
-          >
-            <div
-              class="row row-cols-4"
-              data-testid="answered-questions"
+              class="tab-pane fade mt-5 active show"
+              id="unanswered-questions"
+              role="tabpanel"
             >
               <div
-                class="column"
-              >
-                <div
-                  class="card text-center mb-3"
-                  role="article"
-                >
-                  <div
-                    class="card-body"
-                  >
-                    <div
-                      class="avatar"
-                    >
-                      <img
-                        alt="Avatar"
-                        class="avatar"
-                        src="/assets/avatar_1.jpg"
-                      />
-                    </div>
-                    <h5
-                      class="card-title mb-0"
-                    >
-                      Sarah Edo
-                    </h5>
-                    <p
-                      class="card-text text-secondary"
-                    >
-                      July 14, 2016 at 2 AM
-                    </p>
-                    <a
-                      class="btn btn-outline-primary"
-                      href="/questions/6ni6ok3ym7mf1p33lnez"
-                    >
-                      Show details
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="column"
-              >
-                <div
-                  class="card text-center mb-3"
-                  role="article"
-                >
-                  <div
-                    class="card-body"
-                  >
-                    <div
-                      class="avatar"
-                    >
-                      <img
-                        alt="Avatar"
-                        class="avatar"
-                        src="/assets/avatar_1.jpg"
-                      />
-                    </div>
-                    <h5
-                      class="card-title mb-0"
-                    >
-                      Sarah Edo
-                    </h5>
-                    <p
-                      class="card-text text-secondary"
-                    >
-                      June 28, 2016 at 9 PM
-                    </p>
-                    <a
-                      class="btn btn-outline-primary"
-                      href="/questions/8xf0y6ziyjabvozdd253nd"
-                    >
-                      Show details
-                    </a>
-                  </div>
-                </div>
-              </div>
+                class="row row-cols-4"
+                data-testid="unanswered-questions"
+              />
             </div>
           </div>
         </div>

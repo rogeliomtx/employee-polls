@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 
 import { handleLogin as handleLoginAction } from "../actions/authedUser";
 
 const Login = ({ isAuthenticated, dispatch }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const intendedUrl = new URLSearchParams(location.search).get('redirect') || '/';
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/");
+      navigate(intendedUrl, { replace: true });
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, intendedUrl]);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -27,7 +30,7 @@ const Login = ({ isAuthenticated, dispatch }) => {
       if (user) {
         setUsername("");
         setPassword("");
-        navigate("/");
+        navigate(intendedUrl, { replace: true });
       } else {
         alert("username or password is incorrect");
       }
@@ -76,8 +79,10 @@ const Login = ({ isAuthenticated, dispatch }) => {
   )
 }
 
-const mapStateToProps = ({ authedUser }) => ({
-  isAuthenticated: authedUser !== null,
-});
+const mapStateToProps = (props) => {
+  return {
+    isAuthenticated: props.authedUser !== null,
+  }
+};
 
 export default connect(mapStateToProps)(Login);

@@ -1,41 +1,15 @@
 import { connect } from "react-redux";
 
-import Question from "./Question";
 import { formatQuestion } from "../utils/helpers";
+import QuestionCategoryList from "./QuestionCategoryList";
 
-const Home = (props) => {
+const Home = ({ questionsUnanswered, questionsAnswered }) => {
   return (
     <div role="contentinfo">
-      <div className="card mt-5">
-        <div className="card-header">Unanswered</div>
-        <div className="card-body">
-          <div className="row row-cols-4" data-testid="unanswered-questions">
-            {
-              props.questionsUnanswered &&
-              props.questionsUnanswered.map((question) => (
-                <div key={question.id} className="column">
-                  <Question question={question} />
-                </div>
-              ))
-            }
-          </div>
-        </div>
-      </div>
-      <div className="card mt-5 mb-5">
-        <div className="card-header">Answered</div>
-        <div className="card-body">
-          <div className="row row-cols-4" data-testid="answered-questions">
-            {
-              props.questionsAnswered &&
-              props.questionsAnswered.map((question) => (
-                <div key={question.id} className="column">
-                  <Question question={question} />
-                </div>
-              ))
-            }
-          </div>
-        </div>
-      </div>
+      <QuestionCategoryList
+        questionsUnanswered={questionsUnanswered}
+        questionsAnswered={questionsAnswered}
+      />
     </div>
   )
 }

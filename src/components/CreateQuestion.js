@@ -11,6 +11,13 @@ const CreateQuestion = ({ dispatch }) => {
 
   const handleAddQuestion = (e) => {
     e.preventDefault();
+
+    // avoid empty options
+    if (optionOne === "" || optionTwo === "") {
+      alert("Please enter both options");
+      return;
+    }
+
     dispatch(addQuestionAction(optionOne, optionTwo));
     setOptionOne("");
     setOptionTwo("");

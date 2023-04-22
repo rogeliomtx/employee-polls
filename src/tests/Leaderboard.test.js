@@ -22,6 +22,4 @@ describe("Leaderboard", () => {
     renderWithProviders(component, authedUserState);
     expect(screen.getByRole("contentinfo", {text: /leaderboard/i})).toBeInTheDocument();
   });
-
-  // todo. test leaderboard
 });

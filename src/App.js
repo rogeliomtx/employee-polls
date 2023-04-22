@@ -17,7 +17,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import { handleInitialData } from "./actions/shared";
 
-function App({ dispatch, loading, isAuthenticated }) {
+function App({ dispatch, loading }) {
   useEffect(() => {
     dispatch(handleInitialData());
   });
@@ -65,7 +65,6 @@ function App({ dispatch, loading, isAuthenticated }) {
 const mapStateToProps = ({ users, authedUser }) => {
   return {
     loading: users === null,  // if users are loaded, loading is false
-    isAuthenticated: authedUser !== null,
     authedUser,
   }
 }
