@@ -47,6 +47,7 @@ function App({ dispatch, loading }) {
                     <CreateQuestion />
                   </ProtectedRoute>
                 } />
+                <Route path="/questions/not-found" element={<NotFound message="Question not found" />} />
                 <Route path="/questions/:questionId" element={
                   <ProtectedRoute>
                     <QuestionDetails />

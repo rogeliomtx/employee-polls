@@ -1,8 +1,11 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
-const ProtectedRoute = ({ isAuthenticated, children }) => {
+const ProtectedRoute = ({ children }) => {
   const location = useLocation();
+  
+  const { authedUser } = useSelector((state) => state);
+  const isAuthenticated = authedUser !== null;
 
   if (!isAuthenticated) {
     return (
@@ -13,7 +16,7 @@ const ProtectedRoute = ({ isAuthenticated, children }) => {
 }
 
 const mapStateToProps = ({ authedUser }) => ({
-  isAuthenticated: authedUser !== null,
+ 
 });
 
-export default connect(mapStateToProps)(ProtectedRoute);
+export default ProtectedRoute;

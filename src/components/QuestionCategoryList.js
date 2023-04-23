@@ -1,15 +1,9 @@
-import { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { useState } from "react";
 
 import QuestionCategory from "./QuestionCategory";
 
 const QuestionCategoryList = ({ questionsUnanswered, questionsAnswered }) => {
   const [ categorySelected, setCategorySelected ] = useState("unanswered-questions");
-
-  const handleToggle = (e) => {
-    e.preventDefault();
-    setCategorySelected(e.target.id);
-  };
 
   return (
     <div className="card mt-5 p-3">
@@ -56,4 +50,4 @@ const QuestionCategoryList = ({ questionsUnanswered, questionsAnswered }) => {
   );
 };
 
-export default connect()(QuestionCategoryList);
+export default QuestionCategoryList;

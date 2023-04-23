@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
 import { handleAddQuestion as addQuestionAction } from "../actions/shared";
 
-const CreateQuestion = ({ dispatch }) => {
+const CreateQuestion = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [optionOne, setOptionOne] = useState("");
   const [optionTwo, setOptionTwo] = useState("");
@@ -56,4 +57,4 @@ const CreateQuestion = ({ dispatch }) => {
   )
 }
 
-export default connect()(CreateQuestion);
+export default CreateQuestion;

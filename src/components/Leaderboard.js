@@ -1,8 +1,32 @@
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import Avatar from "./Avatar";
 
-const Leaderboard = (props) => {
+const Leaderboard = () => {
+  const { users } = useSelector((state) => state);
+
+  // questionsAnswered & questionsCreated by user
+  const scores = Object.values(users).map((user) => {
+    return {
+      id: user.id,
+      user: {
+        id: user.id,
+        name: user.name,
+        avatarURL: user.avatarURL,
+      },
+      questionsAnswered: Object.keys(user.answers).length,
+      questionsCreated: user.questions.length
+    }
+  });
+
+  // sort by questionsAnswered + questionsCreated
+  scores.sort((a, b) => {
+    const aTotal = a.questionsAnswered + a.questionsCreated;
+    const bTotal = b.questionsAnswered + b.questionsCreated;
+
+    return bTotal - aTotal;
+  });
+
   return (
     <div className="card mt-5" role="contentinfo">
         <div className="card-header">Leaderboard</div>
@@ -18,7 +42,7 @@ const Leaderboard = (props) => {
             </thead>
             <tbody>
               {
-                props.scores.map((score, index) => (
+                scores.map((score, index) => (
                   <tr key={score.id}>
                     <th scope="row">{index + 1}</th>
                     <td>
@@ -44,30 +68,4 @@ const Leaderboard = (props) => {
   )
 }
 
-const mapStateToProps = ({ users }) => {
-  // questionsAnswered & questionsCreated by user
-  const scores = Object.values(users).map((user) => {
-    return {
-      id: user.id,
-      user: {
-        id: user.id,
-        name: user.name,
-        avatarURL: user.avatarURL,
-      },
-      questionsAnswered: Object.keys(user.answers).length,
-      questionsCreated: user.questions.length
-    }
-  });
-
-  // sort by questionsAnswered + questionsCreated
-  scores.sort((a, b) => {
-    const aTotal = a.questionsAnswered + a.questionsCreated;
-    const bTotal = b.questionsAnswered + b.questionsCreated;
-
-    return bTotal - aTotal;
-  });
-
-  return { scores }
-};
-
-export default connect(mapStateToProps)(Leaderboard);
+export default Leaderboard;

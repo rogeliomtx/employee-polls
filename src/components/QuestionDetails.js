@@ -1,27 +1,53 @@
-import { connect } from "react-redux";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, Navigate } from "react-router-dom";
 
 import { handleAnswerQuestion } from "../actions/shared";
 
 import QuestionOption from "./QuestionOption";
 
-const withRouter = (Component) => {
-  const ComponentWithRouterProp = (props) => {
-    let location = useLocation();
-    let navigate = useNavigate();
-    let params = useParams();
-    
-    return <Component {...props} router={{ location, navigate, params }} />;
+
+const QuestionDetails = () => {
+  const dispatch = useDispatch();
+  const params = useParams();
+
+  const { authedUser, questions, users } = useSelector((state) => state);
+  const { questionId } = params;
+  
+  // details
+  const _question = questions[questionId];
+
+  // if doesn't exist, return 404
+  if (_question === undefined) {
+    return <Navigate to="/questions/not-found" />
+  }
+
+  const author = users[_question.author];
+  const answer = users[authedUser].answers[questionId];
+
+  // % of votes
+  const total = _question.optionOne.votes.length + _question.optionTwo.votes.length;
+  let optionOnePercentage = 0;
+  let optionTwoPercentage = 0;
+
+  if (total !== 0) {
+    optionOnePercentage = ((_question.optionOne.votes.length / total) * 100).toFixed();
+    optionTwoPercentage = ((_question.optionTwo.votes.length / total) * 100).toFixed();
+  }
+
+  const question = {
+    ..._question,
+    isAnswered: answer !== undefined,
+    answer,
+    percentages: {
+      optionOne: optionOnePercentage,
+      optionTwo: optionTwoPercentage
+    },
+    totals: {
+      optionOne: _question.optionOne.votes.length,
+      optionTwo: _question.optionTwo.votes.length
+    }
   };
 
-  return ComponentWithRouterProp;
-};
-
-const QuestionDetails = ({
-  question,
-  author,
-  dispatch
-}) => {
   const handleSelect = (e) => {
     e.preventDefault();
     const answer = e.target.name;
@@ -57,42 +83,4 @@ const QuestionDetails = ({
   )
 };
 
-const mapStateToProps = ({ authedUser, questions, users }, props) => {
-  const { questionId } = props.router.params;
-  
-  // details
-  const question = questions[questionId];
-  const author = users[question.author];
-  const answer = users[authedUser].answers[questionId];
-
-  // % of votes
-  const total = question.optionOne.votes.length + question.optionTwo.votes.length;
-  let optionOnePercentage = 0;
-  let optionTwoPercentage = 0;
-
-  if (total !== 0) {
-    optionOnePercentage = ((question.optionOne.votes.length / total) * 100).toFixed();
-    optionTwoPercentage = ((question.optionTwo.votes.length / total) * 100).toFixed();
-  }
-
-  const formatedQuestion = {
-    ...question,
-    isAnswered: answer !== undefined,
-    answer,
-    percentages: {
-      optionOne: optionOnePercentage,
-      optionTwo: optionTwoPercentage
-    },
-    totals: {
-      optionOne: question.optionOne.votes.length,
-      optionTwo: question.optionTwo.votes.length
-    }
-  };
-
-  return {
-    question: formatedQuestion,
-    author,
-  }
-}
-
-export default withRouter(connect(mapStateToProps)(QuestionDetails));
+export default QuestionDetails;

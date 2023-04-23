@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { handleLogout as handleLogoutAction } from "../actions/authedUser";
 import Avatar from "./Avatar";
 
-const Navbar = ({ currentUser, dispatch }) => {
+const Navbar = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { authedUser, users } = useSelector((state) => state);
+  const currentUser = users[authedUser] || null;
 
   const handleLogOut = (e) => {
     e.preventDefault();
@@ -63,10 +67,4 @@ const Navbar = ({ currentUser, dispatch }) => {
   )
 }
 
-const mapStateToProps = ({ authedUser, users }) => {
-  const currentUser = users[authedUser];
-  if (currentUser === undefined) return { currentUser: null };
-  return { currentUser }
-};
-
-export default connect(mapStateToProps)(Navbar);
+export default Navbar;

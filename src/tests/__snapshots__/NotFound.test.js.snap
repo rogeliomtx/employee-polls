@@ -106,7 +106,7 @@ exports[`Not found raised when the address doesn't exist (with authedUser) shoul
         <button
           class="btn btn-primary"
         >
-          Go Back
+          Go Back Home
         </button>
       </div>
     </div>
@@ -203,7 +203,7 @@ exports[`Not found raised when the address doesn't exist (without authedUser) sh
         <button
           class="btn btn-primary"
         >
-          Go Back
+          Go Back Home
         </button>
       </div>
     </div>

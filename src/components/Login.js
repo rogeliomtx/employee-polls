@@ -1,21 +1,29 @@
 import { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router";
 
 import { handleLogin as handleLoginAction } from "../actions/authedUser";
 
-const Login = ({ isAuthenticated, dispatch }) => {
+const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
+  // ?redirect url
   const intendedUrl = new URLSearchParams(location.search).get('redirect') || '/';
 
+  // authedUser
+  const { authedUser } = useSelector((state) => state);
+  const isAuthenticated = authedUser !== null;
+
+  // redirect if already logged in
   useEffect(() => {
     if (isAuthenticated) {
       navigate(intendedUrl, { replace: true });
     }
   }, [isAuthenticated, navigate, intendedUrl]);
 
+  // form
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -79,10 +87,4 @@ const Login = ({ isAuthenticated, dispatch }) => {
   )
 }
 
-const mapStateToProps = (props) => {
-  return {
-    isAuthenticated: props.authedUser !== null,
-  }
-};
-
-export default connect(mapStateToProps)(Login);
+export default Login;
